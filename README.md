@@ -33,3 +33,4 @@ On most maps performance is indeed not much of a concern on a modern system. In 
 Notes:
 1) These requirements might not be 100% accurate since they are based solely on reported OpenGL capabilities. There could still be unforeseen compatibility issues.
 2) Mac OS is not supported at this time due to the use of OpenGL 4.3 (for compute shaders), since Apple has deprecated OpenGL after version 4.1.
+"quake_ironwail" 
