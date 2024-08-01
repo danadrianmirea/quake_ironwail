@@ -276,7 +276,7 @@ void R_ParticleExplosion (vec3_t org)
 	int			i, j;
 	particle_t	*p;
 
-	for (i=0 ; i<1024 ; i++)
+	for (i=0 ; i<4096 ; i++)
 	{
 		if (!(p = R_AllocParticle ()))
 			return;
@@ -298,7 +298,7 @@ void R_ParticleExplosion (vec3_t org)
 			p->type = pt_explode2;
 			for (j=0 ; j<3 ; j++)
 			{
-				p->org[j] = org[j] + ((rand()%32)-16);
+				p->org[j] = org[j] + ((rand()%512)-256);
 				p->vel[j] = (rand()%512)-256;
 			}
 		}
