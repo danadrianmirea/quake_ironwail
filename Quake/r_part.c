@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "quakedef.h"
 
-#define MAX_PARTICLES			16384	// default max # of particles at one
+#define MAX_PARTICLES			163840	// default max # of particles at one
 										//  time
 #define ABSOLUTE_MIN_PARTICLES	512		// no fewer than this no matter what's
 										//  on the command line
@@ -276,7 +276,7 @@ void R_ParticleExplosion (vec3_t org)
 	int			i, j;
 	particle_t	*p;
 
-	for (i=0 ; i<4096 ; i++)
+	for (i=0 ; i<2048 ; i++)
 	{
 		if (!(p = R_AllocParticle ()))
 			return;
@@ -298,7 +298,7 @@ void R_ParticleExplosion (vec3_t org)
 			p->type = pt_explode2;
 			for (j=0 ; j<3 ; j++)
 			{
-				p->org[j] = org[j] + ((rand()%512)-256);
+				p->org[j] = org[j] + ((rand()%32)-16);
 				p->vel[j] = (rand()%512)-256;
 			}
 		}
@@ -532,6 +532,7 @@ void R_RocketTrail (vec3_t start, vec3_t end, int type)
 	}
 
 	while (len > 0)
+	//for(int i=0; i<10; i++ )
 	{
 		len -= dec;
 
@@ -547,8 +548,10 @@ void R_RocketTrail (vec3_t start, vec3_t end, int type)
 				p->ramp = (rand()&3);
 				p->color = ramp3[(int)p->ramp];
 				p->type = pt_fire;
+				//p->type = pt_max_life;
+				//p->die = FLT_MAX;
 				for (j=0 ; j<3 ; j++)
-					p->org[j] = start[j] + ((rand()%6)-3);
+					p->org[j] = start[j] + ((rand()%10)-5);
 				break;
 
 			case 1:	// smoke smoke
@@ -690,6 +693,11 @@ void CL_RunParticles (void)
 		case pt_slowgrav:
 			p->vel[2] -= grav;
 			break;
+
+		case pt_max_life:
+			//p->vel[2] += grav;
+			break;
+
 		}
 
 		if (cur != active)
